@@ -29,13 +29,13 @@ def dropRows(myData):
     return myData[~boollist]
 
 
-def main():
+def clean():
     '''
     clean the data
     '''
     args = getArguments()
-    print(args.f)
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
+    print(myData.shape)
     myData = dropColumns(myData, 0.1)
     myData = dropRows(myData)
     print(myData.shape)

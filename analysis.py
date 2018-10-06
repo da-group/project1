@@ -25,40 +25,44 @@ def countNaN(column):
     return NaN_num, NaN_list
 
 
-def values(column):
+def wrongValues(column):
     '''
-    statistic of column values
+    count wrong values whose data type is incompatible
     '''
-    values = pd.unique(column)
-    num_values = len(values)
-    frequency = column.value_counts()
-    return frequency
+    # First, drop the NaN rows
+    _, NaN_list = countNaN(column)
+    column = column[~NaN_list]
+    # when the variable type is str
+    if column.dtype==object:
+        wrong_list = ~column.apply(lambda x: isinstance(x, str))
+        wrong_num = sum(wrong_list)
+        return wrong_num, wrong_list
+    # when the data type is numerical (int, float and so on)
+    else:
+        wrong_list = ~column.apply(lambda x: type(x)==column.dtype)
+        wrong_num = sum(wrong_list)
+        return wrong_num, wrong_list
 
 
 
-def main():
+def qualify():
     '''
     cleanness analysis
+    try to qualify the cleanness of attributes
     '''
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
     r_num, c_num = myData.shape
     for key in myData.columns:
         NaN_num, NaN_list = countNaN(myData[key])
-        frequency = values(myData[key])
-        print(key, NaN_num*1.0/r_num)
-        print(frequency)
+        wrong_num, wrong_list = wrongValues(myData[key])
+        cleanness = (NaN_num+wrong_num)*1.0/r_num
+        print(key, NaN_num, wrong_num, cleanness)
+
 
 
 
 
 if __name__ == '__main__':
-    main()
-    '''
-    myData = pd.read_csv('dataset/crime2017.csv', sep=',', encoding='latin1')
-    print(myData.head())
-    index = myData.isnull().any(axis=1)
-    print(sum(index))
-    print(myData.shape)
-    '''
+    qualify()
 
