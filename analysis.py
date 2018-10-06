@@ -45,33 +45,36 @@ def wrongValues(column):
 
 
 
-def qualify():
+def qualify(myData):
     '''
     cleanness analysis
     try to qualify the cleanness of attributes
     the lower the value is, the less clean the attribute is
     '''
-    args = getArguments()
-    myData = pd.read_csv(args.f, sep=',', encoding='latin1')
     r_num, c_num = myData.shape
-
     # define key-cleanness quality dictionary
     d = {}
     for key in myData.columns:
         NaN_num, NaN_list = countNaN(myData[key])
         wrong_num, wrong_list = wrongValues(myData[key])
+        # cleanness is defined by ratio of bad values and NaN values
         cleanness = (NaN_num+wrong_num)*1.0/r_num
         d[key] = cleanness
-        print(key, NaN_num, wrong_num, cleanness)
 
     # sort by cleaness
     sorted_list = sorted(d.items(), key=lambda ele: ele[1], reverse=True)
     return sorted_list
 
 
-if __name__ == '__main__':
+def main():
+    args = getArguments()
+    myData = pd.read_csv(args.f, sep=',', encoding='latin1')
     sorted_list = qualify()
     print('find 3 Least clean attributes are:')
     for i in range(3):
         print(sorted_list[i])
+
+
+if __name__ == '__main__':
+    main()
 

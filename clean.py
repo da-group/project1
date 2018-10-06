@@ -6,7 +6,7 @@
 import argparse
 import pandas as pd
 
-from analysis import getArguments, countNaN
+from analysis import getArguments, countNaN, wrongValues, qualify
 
 
 def dropColumns(myData, thre):
@@ -21,24 +21,33 @@ def dropColumns(myData, thre):
     return myData
 
 
-def dropRows(myData):
+def dropRows(myData, column):
     '''
     drop rows with NaN values
     '''
-    boollist = myData.isnull().any(axis=1)
-    return myData[~boollist]
+    _, NaN_l = countNaN(column)
+    _, wrong_l = wrongValues(column)
+    return myData[~(NaN_l|wrong_l)]
 
 
-def clean():
+def clean(myData):
     '''
     clean the data
     '''
+    myData = dropColumns(myData, 0.1)
+    sorted_list = qualify(myData)
+    print(sorted_list)
+    for i in range(3):
+        myData = dropRows(myData, myData[sorted_list[i][0]])
+    sorted_list = qualify(myData)
+    print('after clean')
+    print(sorted_list)
+
+
+def main():
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
-    print(myData.shape)
-    myData = dropColumns(myData, 0.1)
-    myData = dropRows(myData)
-    print(myData.shape)
+    clean(myData)
 
 
 if __name__ == '__main__':
