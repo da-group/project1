@@ -9,14 +9,12 @@ import pandas as pd
 from analysis import getArguments, countNaN, wrongValues, qualify
 
 
-def dropColumns(myData, thre):
+def dropColumns(myData, thre, sorted_list):
     '''
-    drop columns whose (NaN number)/(row numbers) > thre
+    drop columns whose (NaN + wrong)/(row numbers) > thre
     '''
-    N, C = myData.shape
-    for key in myData.columns:
-        NaN_num, NaN_list = countNaN(myData[key])
-        if (NaN_num)*1.0/N > thre:
+    for key, value in sorted_list:
+        if value > thre:
             myData = myData.drop(key, axis=1)
     return myData
 
@@ -34,9 +32,13 @@ def clean(myData):
     '''
     clean the data
     '''
-    myData = dropColumns(myData, 0.1)
+    # evaluate
     sorted_list = qualify(myData)
     print(sorted_list)
+    # drop columns
+    myData = dropColumns(myData, 0.1, sorted_list)
+    sorted_list = qualify(myData)
+    # drop rows
     for i in range(3):
         myData = dropRows(myData, myData[sorted_list[i][0]])
     sorted_list = qualify(myData)
