@@ -12,7 +12,7 @@ def getArguments():
     get and parse command line arguments
     '''
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', type=str, default='./dataset/crime2017.csv')
+    parser.add_argument('-f', type=str, default='./dataset/crime2017.csv', help='the file path')
     return parser.parse_args()
 
 
