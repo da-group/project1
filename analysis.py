@@ -59,6 +59,7 @@ def qualify(myData):
         wrong_num, wrong_list = wrongValues(myData[key])
         # cleanness is defined by ratio of bad values and NaN values
         cleanness = (NaN_num+wrong_num)*1.0/r_num
+        # print(key, wrong_num)
         d[key] = cleanness
 
     # sort by cleaness
@@ -69,7 +70,7 @@ def qualify(myData):
 def main():
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
-    sorted_list = qualify()
+    sorted_list = qualify(myData)
     print('find 3 Least clean attributes are:')
     for i in range(3):
         print(sorted_list[i])
