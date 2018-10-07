@@ -44,12 +44,14 @@ def clean(myData):
     sorted_list = qualify(myData)
     print('after clean')
     print(sorted_list)
+    return myData
 
 
 def main():
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
-    clean(myData)
+    myData = clean(myData)
+    myData.to_csv(args.f.replace('.csv', '_cleaned.csv'), sep=',')
 
 
 if __name__ == '__main__':
