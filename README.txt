@@ -5,4 +5,5 @@ Usage: python/python3 analysis.py -f file-path (the default is ./dataset/crime20
 
 
 File clean.py first drop the columns whose messy value is bigger than a certain threshold, then drop the rows with bad values in the 3 least clean columns
+After cleaning, save the cleaned data to the same directory with the sub-fix '_cleaned'. For example crime2017.csv will be resaved as crime2017_cleaned.csv
 Usage: python/python3 analysis.py -f file-path (the default is ./dataset/crime2017.csv)
