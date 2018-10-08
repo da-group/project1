@@ -12,3 +12,10 @@ Usage: python/python3 analysis.py -f file-path (the default is ./dataset/crime20
 File clean.py first drop the columns whose messy value is bigger than a certain threshold, then drop the rows with bad values in the 3 least clean columns
 After cleaning, save the cleaned data to the same directory with the sub-fix '_cleaned'. For example crime2017.csv will be resaved as crime2017_cleaned.csv
 Usage: python/python3 analysis.py -f file-path (the default is ./dataset/crime2017.csv)
+
+
+Here is our github link:
+https://github.com/da-group/project1
+Unfortunately, as one of my teammate said, running python script analysis.py and clean.py on windows will lead to unexpected error.(I do not know whether it is related to windows)
+It is about the variable wrong_list in analysis.py. And it looks like it can not make correct logical calculation under his environment.
+Therefore I highly recommend to use mac and python 3.6.5, which is my environmenti, or linux. (I wish it will be OK)
