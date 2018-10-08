@@ -71,8 +71,8 @@ def main():
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
     sorted_list = qualify(myData)
-    print('find 3 Least clean attributes are:')
-    for i in range(3):
+    print('the quality score of each attribute (the closer to 0, the cleaner the attribute):')
+    for i in range(len(sorted_list)):
         print(sorted_list[i])
 
 
