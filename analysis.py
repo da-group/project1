@@ -39,7 +39,10 @@ def wrongValues(column):
         return wrong_num, wrong_list
     # when the data type is numerical (int, float and so on)
     else:
-        wrong_list = ~column.apply(lambda x: type(x)==column.dtype)
+        # The following line has a bug:
+        # wrong_list = ~column.apply(lambda x: type(x)==column.dtype)
+        # fixed by this:
+        wrong_list = [type(column[i]) != column.dtype for i in column.index]
         wrong_num = sum(wrong_list)
         return wrong_num, wrong_list
 
