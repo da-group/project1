@@ -51,7 +51,7 @@ def main():
     args = getArguments()
     myData = pd.read_csv(args.f, sep=',', encoding='latin1')
     myData = clean(myData)
-    myData.to_csv(args.f.replace('.csv', '_cleaned.csv'), sep=',')
+    myData.to_csv(args.f.replace('.csv', '_cleaned.csv'), sep=',',index=None)
 
 
 if __name__ == '__main__':
